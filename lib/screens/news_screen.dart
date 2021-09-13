@@ -11,7 +11,7 @@ class Newscreen extends StatefulWidget {
 
 class _NewscreenState extends State<Newscreen> {
   ApiServices client = ApiServices();
-  List newsList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,88 +26,68 @@ class _NewscreenState extends State<Newscreen> {
               child: CircularProgressIndicator(),
             );
           } else {
-            // return Container(child: Text(snapshot.data.articles[5].title));
-            return Container(
-              margin: EdgeInsets.all(12),
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(color: Colors.white),
-                ],
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListView(
-                children: [
-                  Container(
+            return ListView.builder(
+                itemCount: snapshot.data.articles.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.all(12.0),
+                    padding: EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 3.0,
+                          ),
+                        ]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 120,
+                          height: 200.0,
+                          width: double.infinity,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+                            //let's add the height
+
                             image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                snapshot.data.articles[8].urlToImage,
-                              ),
+                                image: NetworkImage(
+                                    snapshot.data.articles[index].urlToImage),
+                                fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(6.0),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: Text(
+                            snapshot.data.articles[index].source.name,
+                            style: TextStyle(
+                              color: Colors.white,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 8.0,
                         ),
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.green),
-                          child: Text(snapshot.data.articles[8].source.name),
-                        ),
-                        Text(snapshot.data.articles[8].title)
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                snapshot.data.articles[10].urlToImage,
-                              ),
-                            ),
+                        Text(
+                          snapshot.data.articles[index].title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.green),
-                          child: Text(snapshot.data.articles[10].source.name),
-                        ),
-                        Text(snapshot.data.articles[10].title)
+                        )
                       ],
                     ),
-                  ),
-                ],
-              ),
-            );
+                  );
+                });
           }
         },
       ),
