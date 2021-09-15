@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'screens/news_detial_screen.dart';
 import 'screens/news_screen.dart';
 
 void main() {
@@ -12,6 +13,9 @@ class Myapp extends StatelessWidget {
     return MaterialApp(
       home: Newscreen(),
       debugShowCheckedModeBanner: false,
+      routes: {
+        "/detailpafe": (context) => newsDetail(),
+      },
     );
   }
 }

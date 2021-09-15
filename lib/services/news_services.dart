@@ -11,7 +11,7 @@ class ApiServices {
         "https://newsapi.org/v2/everything?q=Apple&from=2021-09-12&sortBy=popularity&apiKey=827dea572df845ea9be0bd26e85f0746";
     var respond = await http.get(Uri.parse(url));
     if (respond.statusCode == 200) {
-      var jsonData = jsonDecode(respond.body);
+      // var jsonData = jsonDecode(respond.body);
       NewsModel news = newsModelFromJson(respond.body);
       return news;
     } else {
