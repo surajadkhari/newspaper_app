@@ -26,100 +26,117 @@ class _NewscreenState extends State<Newscreen> {
       appBar: AppBar(
         title: Text("News"),
       ),
-      body: FutureBuilder<NewsModel>(
-        future: _future,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return ListView.builder(
-                scrollDirection: Axis.vertical,
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: snapshot.data.articles.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => newsDetail(
-                            detail: snapshot.data.articles[index].description,
-                            title: snapshot.data.articles[index].title,
-                            imageurl: snapshot.data.articles[index].urlToImage,
-                            source: snapshot.data.articles[index].source.name,
-                          ),
-                        ),
-                      );
-                      // Navigator.pushNamed(context, "/detailpafe",a);
-                    },
-                    child: Container(
-                      width: 200,
-                      margin: EdgeInsets.all(12.0),
-                      padding: EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 3.0,
-                            ),
-                          ]),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 200.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              //let's add the height
-
-                              image: DecorationImage(
-                                  image: NetworkImage(
-                                      snapshot.data.articles[index].urlToImage),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(6.0),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Text(
-                              snapshot.data.articles[index].source.name,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                          Text(
-                            // "${snapshot.data.articles[index].title} hasfjhsafhashfpiashfiashfpjasnfnsakfnas",
-                            snapshot.data.articles[index].title,
-                            maxLines: 2,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.0,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              "Top News",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: FutureBuilder<NewsModel>(
+              future: _future,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                });
-          }
-        },
+                } else {
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.articles.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => newsDetail(
+                                  detail:
+                                      snapshot.data.articles[index].description,
+                                  title: snapshot.data.articles[index].title,
+                                  imageurl:
+                                      snapshot.data.articles[index].urlToImage,
+                                  source:
+                                      snapshot.data.articles[index].source.name,
+                                ),
+                              ),
+                            );
+                            // Navigator.pushNamed(context, "/detailpafe",a);
+                          },
+                          child: Container(
+                            width: 200,
+                            margin: EdgeInsets.all(12.0),
+                            padding: EdgeInsets.all(12.0),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12,
+                                    blurRadius: 3.0,
+                                  ),
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 200.0,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    //let's add the height
+
+                                    image: DecorationImage(
+                                        image: NetworkImage(snapshot
+                                            .data.articles[index].urlToImage),
+                                        fit: BoxFit.cover),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8.0,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(6.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  child: Text(
+                                    snapshot.data.articles[index].source.name,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8.0,
+                                ),
+                                Text(
+                                  // "${snapshot.data.articles[index].title} hasfjhsafhashfpiashfiashfpjasnfnsakfnas",
+                                  snapshot.data.articles[index].title,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.clip,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
